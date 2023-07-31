@@ -71,9 +71,9 @@ gsapControl.seek(3);
 // gsap_03.html
 
 // timeline : 순서대로 진행
-	let tl = gsap.timeline({});
+let tl = gsap.timeline({});
 
-	tl.to('._bg01', {
+tl.to('._bg01', {
 		rotation: 360, // 회전
 		x: 500, // x축으로 이동
 		duration: 2 // 지속시간
