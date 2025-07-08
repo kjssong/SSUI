@@ -123,8 +123,9 @@ export default function FormWithPreview() {
 
 ```
 
-제어 컴포넌트 = 단일 입력 처리
-입력 폼 처리 = 제어 컴포넌트를 여러 개 묶어서 다루기
+-   제어 컴포넌트 = 단일 입력 처리
+
+-   입력 폼 처리 = 제어 컴포넌트를 여러 개 묶어서 다루기
 
 ----------
 
@@ -137,29 +138,42 @@ export default function FormWithPreview() {
 
 **예시:**
 
+https://codesandbox.io/p/sandbox/phf2zs?file=%2Fsrc%2FApp.js%3A15%2C25
+
 ```jsx
 import { useState } from "react";
 
 export default function CreateExample() {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState("");
+  const [items, setItems] = useState([]); // 항목을 저장할 배열
+  const [newItem, setNewItem] = useState(""); // 입력값
 
   const handleAdd = () => {
-    if (newItem.trim() === "") return;
-    setItems((prev) => [...prev, newItem]);
-    setNewItem("");
+    if (newItem.trim() === "") return; // 공백 입력은 무시
+    setItems((prev) => [...prev, newItem]); // 기존 배열에 새 값 추가
+    setNewItem(""); // 입력창 초기화
   };
 
   return (
-    <>
-      <input value={newItem} onChange={(e) => setNewItem(e.target.value)} placeholder="새 항목" />
-      <button onClick={handleAdd}>추가</button>
-      <ul>
-        {items.map((item, idx) => <li key={idx}>{item}</li>)}
+    <div style={{ padding: "20px" }}>
+      <h2>📝 할 일 추가</h2>
+      <input
+        value={newItem}
+        onChange={(e) => setNewItem(e.target.value)}
+        placeholder="할 일 입력"
+      />
+      <button onClick={handleAdd} style={{ marginLeft: "10px" }}>
+        추가
+      </button>
+
+      <ul style={{ marginTop: "20px" }}>
+        {items.map((item, idx) => (
+          <li key={idx}>{item}</li> // 목록 출력
+        ))}
       </ul>
-    </>
+    </div>
   );
 }
+
 
 ```
 
@@ -173,6 +187,8 @@ export default function CreateExample() {
     
 
 **예시:**
+
+https://codesandbox.io/p/sandbox/95yyz5?file=%2Fsrc%2FApp.js%3A48%2C1
 
 ```jsx
 import { useState } from "react";
