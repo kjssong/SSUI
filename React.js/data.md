@@ -11,6 +11,8 @@
 
 **예시:**
 
+https://codesandbox.io/p/sandbox/dazzling-dijkstra-fzr452?file=%2Fsrc%2FApp.js%3A20%2C1
+
 ```jsx
 import { useState } from "react";
 
@@ -18,11 +20,17 @@ export default function Example() {
   const [inputValue, setInputValue] = useState("");
 
   return (
-    <input
-      type="text"
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-    />
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="입력해보세요"
+      />
+      <p>
+        현재 입력값: <strong>{inputValue}</strong>
+      </p>
+    </div>
   );
 }
 
