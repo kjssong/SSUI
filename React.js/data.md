@@ -194,40 +194,55 @@ https://codesandbox.io/p/sandbox/95yyz5?file=%2Fsrc%2FApp.js%3A48%2C1
 import { useState } from "react";
 
 export default function UpdateExample() {
+  // 기술 목록 초기값 설정
   const [items, setItems] = useState(["React", "Vue"]);
+  // 수정 중인 항목의 인덱스를 저장
   const [editIndex, setEditIndex] = useState(null);
+  // 사용자가 입력 중인 값을 저장
   const [editValue, setEditValue] = useState("");
 
-  const startEdit = (idx) => {
-    setEditIndex(idx);
-    setEditValue(items[idx]);
+  // 수정 시작: 어떤 항목을 수정할지 인덱스를 저장하고 해당 값을 editValue에 설정
+  const startEdit = (index) => {
+    setEditIndex(index);
+    setEditValue(items[index]);
   };
 
+  // 수정 저장: 기존 배열을 복사하면서 수정 중인 항목만 새 값으로 교체
   const saveEdit = () => {
-    setItems((prev) =>
-      prev.map((item, idx) => (idx === editIndex ? editValue : item))
+    const updatedItems = items.map((item, idx) =>
+      idx === editIndex ? editValue : item
     );
-    setEditIndex(null);
+    setItems(updatedItems); // 항목 목록 갱신
+    setEditIndex(null); // 수정 모드 종료
   };
 
   return (
-    <ul>
-      {items.map((item, idx) => (
-        <li key={idx}>
-          {editIndex === idx ? (
-            <>
-              <input value={editValue} onChange={(e) => setEditValue(e.target.value)} />
-              <button onClick={saveEdit}>저장</button>
-            </>
-          ) : (
-            <>
-              {item} <button onClick={() => startEdit(idx)}>수정</button>
-            </>
-          )}
-        </li>
-      ))}
-    </ul>
+    <div style={{ padding: "20px" }}>
+      <h2>📋 기술 목록 (수정 가능)</h2>
+      <ul>
+        {items.map((item, idx) => (
+          <li key={idx}>
+            {editIndex === idx ? (
+              // 수정 중인 항목이면 input 필드와 저장 버튼 표시
+              <>
+                <input
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)} // 입력 값 실시간 반영
+                />
+                <button onClick={saveEdit}>저장</button>
+              </>
+            ) : (
+              // 수정 중이 아니라면 항목과 수정 버튼 표시
+              <>
+                {item} <button onClick={() => startEdit(idx)}>수정</button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
+
 
 ```
