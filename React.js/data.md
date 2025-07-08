@@ -56,32 +56,75 @@ export default function Example() {
 
 **예시:**
 
+https://codesandbox.io/p/sandbox/vqyxtf?file=%2Fsrc%2FApp.js%3A29%2C19
+
 ```jsx
 import { useState } from "react";
 
-export default function FormExample() {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+export default function FormWithPreview() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    alert(`제출 완료!\n이름: ${formData.name}\n이메일: ${formData.email}`);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="name" value={formData.name} onChange={handleChange} placeholder="이름" />
-      <input name="email" value={formData.email} onChange={handleChange} placeholder="이메일" />
-      <button type="submit">제출</button>
-    </form>
+    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+      <h2>회원 가입</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            이름:{" "}
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="이름 입력"
+            />
+          </label>
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <label>
+            이메일:{" "}
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="이메일 입력"
+            />
+          </label>
+        </div>
+        <button type="submit" style={{ marginTop: "15px" }}>
+          제출
+        </button>
+      </form>
+
+      <hr style={{ margin: "20px 0" }} />
+
+      <h3>🔎 입력 내용 미리보기</h3>
+      <p>이름: {formData.name || "(미입력)"}</p>
+      <p>이메일: {formData.email || "(미입력)"}</p>
+    </div>
   );
 }
 
+
 ```
+
+제어 컴포넌트 = 단일 입력 처리
+입력 폼 처리 = 제어 컴포넌트를 여러 개 묶어서 다루기
 
 ----------
 
