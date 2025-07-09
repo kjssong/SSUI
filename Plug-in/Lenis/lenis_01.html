@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lenis 기본 스크롤</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden; /* Lenis용 */
+      font-family: sans-serif;
+    }
+
+    .lenis {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .scroll-content {
+      will-change: transform;
+    }
+
+    .section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: #f2f2f2;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .section:nth-child(even) {
+      background: #d0f0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="lenis">
+    <div class="scroll-content">
+      <div class="section">Section 1</div>
+      <div class="section">Section 2</div>
+      <div class="section">Section 3</div>
+      <div class="section">Section 4</div>
+      <div class="section">Section 5</div>
+      <div class="section">Section 6</div>
+      <div class="section">Section 7</div>
+      <div class="section">Section 8</div>
+    </div>
+  </div>
+
+  <!-- Lenis -->
+  <script src="https://unpkg.com/@studio-freight/lenis"></script>
+  <script>
+    // Lenis 인스턴스 생성 (부드러운 스크롤 설정)
+	const lenis = new Lenis({
+	  wrapper: document.querySelector(".lenis"),          // 스크롤 전체를 감싸는 요소
+	  content: document.querySelector(".scroll-content"), // 실제로 움직일 콘텐츠 영역
+	  lerp: 0.07,      // 관성 효과 (0에 가까울수록 느림)
+	  smooth: true     // 부드러운 스크롤 활성화
+	});
+
+	// 매 프레임마다 Lenis 스크롤 애니메이션 실행
+	function raf(time) {
+	  lenis.raf(time);              // 현재 프레임 기준으로 스크롤 위치 계산
+	  requestAnimationFrame(raf);  // 다음 프레임 요청
+	}
+
+	// 애니메이션 루프 시작
+	requestAnimationFrame(raf);
+  </script>
+</body>
+</html>
