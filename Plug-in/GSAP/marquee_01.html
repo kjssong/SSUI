@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>끊김 없는 GSAP 마퀴</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+
+    .marquee-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      background: #111;
+      color: #fff;
+      font-size: 2rem;
+      padding: 20px 0;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+    }
+
+    .marquee-text {
+      padding-right: 100px; /* 문장 간 간격 */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="marquee-wrapper">
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="marquee-text">🌟 GSAP Marquee is smooth and infinite 🌟</div>
+      <div class="marquee-text">🌟 GSAP Marquee is smooth and infinite 🌟</div>
+    </div>
+  </div>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    const track = document.getElementById("marqueeTrack");
+    const text = track.children[0];
+
+    // 콘텐츠 너비 계산
+    const textWidth = text.offsetWidth;
+
+    // 트랙을 2배 이상 복제
+    while (track.offsetWidth < window.innerWidth * 2) {
+      const clone = text.cloneNode(true);
+      track.appendChild(clone);
+    }
+
+    // 무한 애니메이션 적용
+    gsap.to(track, {
+      x: `-=${textWidth}`,  // 한 단위만큼 왼쪽으로 이동
+      duration: 10,
+      ease: "none",
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % textWidth)  // 끊김 없이 반복
+      }
+    });
+  </script>
+</body>
+</html>
